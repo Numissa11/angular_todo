@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Todo } from 'src/app/models/Todo';
+import { Todo } from './../../models/Todo';
 
 @Component({
   selector: 'app-todos',
@@ -8,24 +8,45 @@ import { Todo } from 'src/app/models/Todo';
 })
 export class TodosComponent implements OnInit {
 
-  todos: Todo[];
+  todos:Todo[];
 
-  constructor() 
-  { 
-  }
+  inputTodo:string = "";
+
+  constructor() { }
 
   ngOnInit(): void {
     this.todos = [
       {
-        content: "first todo",
+        content: 'First todo',
         completed: false
       },
       {
-        content: "second todo",
+        content: 'Second todo',
         completed: false
       }
-     
     ]
   }
 
+  toggleDone (id:number) {
+    this.todos.map((v, i) => {
+      if (i == id) v.completed = !v.completed;
+
+      return v;
+    })
+  }
+
+  deleteTodo (id:number) {
+    this.todos = this.todos.filter((v, i) => i !== id);
+  }
+
+  addTodo()
+  {
+    this.todos.push({
+      content: this.inputTodo,
+      completed: false
+    });
+    
+    this.inputTodo="";
+  }
+ 
 }
